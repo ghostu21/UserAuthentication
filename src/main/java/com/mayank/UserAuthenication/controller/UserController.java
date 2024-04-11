@@ -14,6 +14,7 @@ import com.mayank.UserAuthenication.Dto.AuthResponseTO;
 import com.mayank.UserAuthenication.Dto.CreateUserRequestTO;
 import com.mayank.UserAuthenication.Dto.GetUserResponseTO;
 import com.mayank.UserAuthenication.Dto.LoginRequestTO;
+import com.mayank.UserAuthenication.Dto.UpdateUserRequestTO;
 import com.mayank.UserAuthenication.service.UserService;
 import com.mayank.UserAuthenication.service.UserServiceImpl;
 
@@ -64,7 +65,19 @@ public class UserController {
 	GetUserResponseTO userResponse= userService.getUserDetails(jwt);
 	
 	return new ResponseEntity<>(userResponse, HttpStatus.OK);
+ }//UpdateUserRequestTO
+ 
+ 
+ 
+ 
+ @PostMapping("/user")
+ public ResponseEntity<String> updateUserDetail(@RequestHeader ("Authorization") String jwt,@RequestBody UpdateUserRequestTO req){
+	 
+	 userService.updateUser(jwt,req);
+	
+	return new ResponseEntity<>("User Updated...", HttpStatus.OK);
  }
+ 
  
 
 }

@@ -9,6 +9,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.*;
+
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,6 +21,7 @@ import com.mayank.UserAuthenication.Dto.AuthResponseTO;
 import com.mayank.UserAuthenication.Dto.CreateUserRequestTO;
 import com.mayank.UserAuthenication.Dto.GetUserResponseTO;
 import com.mayank.UserAuthenication.Dto.LoginRequestTO;
+import com.mayank.UserAuthenication.Dto.UpdateUserRequestTO;
 import com.mayank.UserAuthenication.Exception.EmailExistsException;
 import com.mayank.UserAuthenication.Exception.InvalidExecption;
 import com.mayank.UserAuthenication.Exception.MobileExistsException;
@@ -32,6 +34,7 @@ import com.mayank.UserAuthenication.repo.RoleRepository;
 import com.mayank.UserAuthenication.repo.UserRepository;
 import com.mayank.UserAuthenication.securityfilter.JwtProvider;
 
+import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
 
 
@@ -172,7 +175,37 @@ public class UserServiceImpl implements UserService{
 	 
  }
  
- public void updateUser(String jwt) {
+ @Override
+ @Transactional
+ public void updateUser(String jwt, UpdateUserRequestTO req) {
+	 
+	 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+	 
+	 String email=jwtProvider.getEmailFromJwtToken(jwt);
+	 User user=this.getUserByEmail(email);
+	 
+	 if(StringUtils.isNotBlank(req.getMobile())) {
+		 user.setMobile(req.getMobile());
+		 
+	 }
+	 
+	 if(StringUtils.isNotBlank(req.getName())) {
+		 user.setUserName(req.getName());
+	 }
+	 if(StringUtils.isNotBlank(req.getDob())) {
+		 try {
+			user.setDob(formatter.parse(req.getDob()));
+		} catch (ParseException e) {
+			throw new InvalidExecption("Dob is invalid");
+		}
+		 
+	 }
+	 
+	 user.setLastModifiedTime(new Date());
+	 
+	 userRepository.save(user);
+	 
+	 
 	 
  }
  
