@@ -1,4 +1,4 @@
-//package com.mayank.UserAuthenication.validator;
+package com.mayank.UserAuthenication.validator;
 //
 //import org.springframework.stereotype.Component;
 //import org.springframework.validation.Errors;
@@ -9,9 +9,40 @@
 //
 //import java.lang.annotation.Annotation;
 //import java.lang.reflect.Field;
-//
+import java.util.Iterator;
+import java.util.Set;
+
+import com.mayank.UserAuthenication.Exception.InvalidExecption;
+
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
+
 //@Component
-//public class GenericValidator implements Validator {
+public class GenericValidator{
+	
+	private static final ValidatorFactory FACTORY = Validation.buildDefaultValidatorFactory();
+    private static final Validator VALIDATOR = FACTORY.getValidator();
+
+    public static Validator getInstance() {
+        return VALIDATOR;
+    }
+
+    
+
+    public static final <T> void validate(final T object) throws InvalidExecption {
+        final Set<ConstraintViolation<T>> violations = VALIDATOR.validate(object);
+        final Iterator<ConstraintViolation<T>> iterator = violations.iterator();
+        ConstraintViolation<T> violation;
+        if (iterator.hasNext()) {
+            violation = iterator.next();
+//            LOG.debug("ConstraintViolation: " + violation.getPropertyPath().toString());
+            throw new InvalidExecption("global.error.invalid.request");
+        }
+    }
+	
+}
 //
 //    @Override
 //    public boolean supports(Class<?> clazz) {
