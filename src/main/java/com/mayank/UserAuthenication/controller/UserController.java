@@ -14,8 +14,8 @@ import com.mayank.UserAuthenication.Dto.AuthResponseTO;
 import com.mayank.UserAuthenication.Dto.CreateUserRequestTO;
 import com.mayank.UserAuthenication.Dto.GetUserResponseTO;
 import com.mayank.UserAuthenication.Dto.LoginRequestTO;
-
 import com.mayank.UserAuthenication.service.UserService;
+import com.mayank.UserAuthenication.service.UserServiceImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

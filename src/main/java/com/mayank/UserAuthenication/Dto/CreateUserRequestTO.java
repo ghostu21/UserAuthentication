@@ -1,18 +1,21 @@
 package com.mayank.UserAuthenication.Dto;
 
 public class CreateUserRequestTO {
-	
+
 
 	    private String userName;
 	    private String email;
 	    private String password;
 	    private String mobile;
-	    
+
+	    private String name;
+	    private String dob;
+
 
 	    // Getters and setters
-	    
 
-	    
+
+
 
 	    public String getUserName() {
 	        return userName;
@@ -46,5 +49,23 @@ public class CreateUserRequestTO {
 	        this.mobile = mobile;
 	    }
 
-	   
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getDob() {
+			return dob;
+		}
+
+		public void setDob(String dob) {
+			this.dob = dob;
+		}
+
+
+
+
 }

@@ -1,5 +1,7 @@
 package com.mayank.UserAuthenication.model;
 
+import java.util.Date;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +23,7 @@ public class User {
  @GeneratedValue(strategy = GenerationType.IDENTITY)
  private Long id;
 
- @Column(name = "user_name",nullable = false)
+ @Column(name = "user_name",nullable = false,unique = true)
  private String userName;
 
  @Column(name = "email",nullable = false, unique = true)
@@ -30,8 +32,21 @@ public class User {
  @Column(name = "password",nullable = false)
  private String password;
 
- @Column(name = "mobile",nullable = false)
+ @Column(name = "mobile",nullable = false,unique = true)
  private String mobile;
+ 
+ @Column(name = "name",nullable = false)
+ private String name;
+ 
+ @Column(name = "dob",nullable = false)
+ private Date dob;
+ 
+ @Column(name = "created_time",nullable = false)
+ private Date createdTime;
+ 
+ @Column(name = "last_modified_time",nullable = false)
+ private Date lastModifiedTime;
+ 
 
  @ManyToOne(fetch = FetchType.EAGER)
  @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
@@ -85,6 +100,38 @@ public Role getRole() {
 
 public void setRole(Role role) {
 	this.role = role;
+}
+
+public String getName() {
+	return name;
+}
+
+public void setName(String name) {
+	this.name = name;
+}
+
+public Date getDob() {
+	return dob;
+}
+
+public void setDob(Date dob) {
+	this.dob = dob;
+}
+
+public Date getCreatedTime() {
+	return createdTime;
+}
+
+public void setCreatedTime(Date createdTime) {
+	this.createdTime = createdTime;
+}
+
+public Date getLastModifiedTime() {
+	return lastModifiedTime;
+}
+
+public void setLastModifiedTime(Date lastModifiedTime) {
+	this.lastModifiedTime = lastModifiedTime;
 }
 
 
