@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
- @ExceptionHandler({UsernameExistsException.class, EmailExistsException.class, MobileExistsException.class})
+ @ExceptionHandler({UsernameExistsException.class, EmailExistsException.class, MobileExistsException.class,InvalidExecption.class})
  public ResponseEntity<String> handleDuplicateEntry(RuntimeException ex) {
      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+ }//NotFoundExecption
+ @ExceptionHandler({NotFoundExecption.class})
+ public ResponseEntity<String> handleNotFoundResource(RuntimeException ex) {
+     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
  }
 
  @ExceptionHandler(Exception.class)

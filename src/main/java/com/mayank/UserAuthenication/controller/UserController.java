@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.mayank.UserAuthenication.Dto.AuthResponseTO;
 import com.mayank.UserAuthenication.Dto.CreateUserRequestTO;
+import com.mayank.UserAuthenication.Dto.GetUserResponseTO;
 import com.mayank.UserAuthenication.Dto.LoginRequestTO;
 
 import com.mayank.UserAuthenication.service.UserService;
@@ -29,20 +30,11 @@ public class UserController {
  private UserService userService;
 
  
- @GetMapping("/user")
- public ResponseEntity<String> HomeController(@RequestHeader ("Authorization") String jwt){
-	 
 
-	 
-	 System.out.print("Coming");
-	
- return new ResponseEntity<>("Welcome to food delivery project", HttpStatus.OK);
- }
 
  @PostMapping("/register")
  public ResponseEntity<AuthResponseTO> registerUser(@RequestBody CreateUserRequestTO userDTO) {
 	 
-	 System.out.print("Coming");
 	 
 	 logger.info("Registartion Start");
     	 AuthResponseTO authResponse =userService.registerUser(userDTO);
@@ -61,6 +53,17 @@ public class UserController {
 	 return new ResponseEntity<>(authResponse, HttpStatus.OK);
 	
 	 
+ }
+ 
+ 
+ 
+ 
+ @GetMapping("/user")
+ public ResponseEntity<?> getUserDetail(@RequestHeader ("Authorization") String jwt){
+	 
+	GetUserResponseTO userResponse= userService.getUserDetails(jwt);
+	
+	return new ResponseEntity<>(userResponse, HttpStatus.OK);
  }
  
 

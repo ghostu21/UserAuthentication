@@ -15,9 +15,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.mayank.UserAuthenication.Dto.AuthResponseTO;
 import com.mayank.UserAuthenication.Dto.CreateUserRequestTO;
+import com.mayank.UserAuthenication.Dto.GetUserResponseTO;
 import com.mayank.UserAuthenication.Dto.LoginRequestTO;
 import com.mayank.UserAuthenication.Exception.EmailExistsException;
+import com.mayank.UserAuthenication.Exception.InvalidExecption;
 import com.mayank.UserAuthenication.Exception.MobileExistsException;
+import com.mayank.UserAuthenication.Exception.NotFoundExecption;
 import com.mayank.UserAuthenication.Exception.UsernameExistsException;
 import com.mayank.UserAuthenication.constants.UserRole;
 import com.mayank.UserAuthenication.model.Role;
@@ -113,6 +116,34 @@ public class UserService {
 	   
 	   return authResponse;
 	 
+	 
+ }
+ 
+ public GetUserResponseTO getUserDetails(String jwt) {
+	 
+	 String email=jwtProvider.getEmailFromJwtToken(jwt);
+	 User user=this.getUserByEmail(email);
+	 
+	 GetUserResponseTO userResponse=new GetUserResponseTO();
+	 
+	 userResponse.setEmail(user.getEmail());
+	 userResponse.setMobile(user.getMobile());
+	 userResponse.setUserName(user.getUserName());
+	 
+	 return userResponse;
+	 
+ }
+ 
+ public User getUserByEmail(String email) {
+	 if(email!=null) {
+		 throw new InvalidExecption("Invalid Email");
+	 }
+	 User user=userRepository.findByEmail(email);
+	 
+	 if(user==null) {
+		 throw new NotFoundExecption("User Not Exist");
+	 }
+	 return user;
 	 
  }
  
