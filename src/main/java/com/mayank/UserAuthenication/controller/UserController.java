@@ -1,40 +1,67 @@
 package com.mayank.UserAuthenication.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import com.mayank.UserAuthenication.Dto.UserDTO;
-import com.mayank.UserAuthenication.Exception.EmailExistsException;
-import com.mayank.UserAuthenication.Exception.MobileExistsException;
-import com.mayank.UserAuthenication.Exception.UsernameExistsException;
+import com.mayank.UserAuthenication.Dto.AuthResponseTO;
+import com.mayank.UserAuthenication.Dto.CreateUserRequestTO;
+import com.mayank.UserAuthenication.Dto.LoginRequestTO;
+
+import com.mayank.UserAuthenication.service.UserService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
-@RequestMapping("/api/users")
+//@RequestMapping("/user")
 public class UserController {
  
  private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-// @Autowired
-// private UserService userService;
+ @Autowired
+ private UserService userService;
 
- @PostMapping("/register")
- public ResponseEntity<String> registerUser(@RequestBody UserDTO userDTO) {
-     try {
-//         userService.registerUser(userDTO);
-//         logger.info("User registered successfully: {}", userDTO.getUserName());
-         return ResponseEntity.ok("User registered successfully");
-     } catch (UsernameExistsException | EmailExistsException | MobileExistsException ex) {
-         logger.error("Error registering user: {}", ex.getMessage());
-         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-     } catch (Exception ex) {
-         logger.error("Internal server error: {}", ex.getMessage());
-         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
-     }
+ 
+ @GetMapping("/user")
+ public ResponseEntity<String> HomeController(@RequestHeader ("Authorization") String jwt){
+	 
+
+	 
+	 System.out.print("Coming");
+	
+ return new ResponseEntity<>("Welcome to food delivery project", HttpStatus.OK);
  }
 
- // Other endpoints...
+ @PostMapping("/register")
+ public ResponseEntity<AuthResponseTO> registerUser(@RequestBody CreateUserRequestTO userDTO) {
+	 
+	 System.out.print("Coming");
+	 
+	 logger.info("Registartion Start");
+    	 AuthResponseTO authResponse =userService.registerUser(userDTO);
+    	 logger.info("User registered successfully: {}", userDTO.getUserName());
+    	 
+    	 logger.info("Registartion End");
+    	 return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
+     
+     
+ }
+ 
+ @PostMapping("/signin")
+ public ResponseEntity<AuthResponseTO> singnin(@RequestBody LoginRequestTO req){
+	 
+	 AuthResponseTO authResponse =userService.userSignIn(req);
+	 return new ResponseEntity<>(authResponse, HttpStatus.OK);
+	
+	 
+ }
+ 
+
 }
