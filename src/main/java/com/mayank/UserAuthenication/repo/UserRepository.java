@@ -8,16 +8,17 @@ import com.mayank.UserAuthenication.model.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findByUserName(String userName);
+	User findByUserName(String userName);
 
-    User findByEmail(String email);
+	User findByEmail(String email);
 
-    User findByMobile(String mobile);
-    
-    boolean existsByUserName(String userName);
-    boolean existsByEmail(String email);
-    boolean existsByMobile(String mobile);
+	User findByMobile(String mobile);
 
-    // Other custom query methods if needed
+	boolean existsByUserName(String userName);
+
+	boolean existsByEmail(String email);
+
+	boolean existsByMobile(String mobile);
+
+	// Other custom query methods if needed
 }
-

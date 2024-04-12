@@ -1,0 +1,2 @@
+INSERT INTO `mayank`.`roles` (`id`, `role_name`) VALUES ('0', 'ROLE_USER');
+INSERT INTO `mayank`.`roles` (`id`, `role_name`) VALUES ('1', 'ROLE_ADMIN');

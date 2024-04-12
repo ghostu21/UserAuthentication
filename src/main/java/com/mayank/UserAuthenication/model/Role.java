@@ -1,23 +1,21 @@
 package com.mayank.UserAuthenication.model;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "roles")
 
 public class Role {
 
-    @Id
-    @Column(name = "id")
-    private Long id;
+	@Id
+	@Column(name = "id")
+	private Long id;
 
-    @Column(name = "role_name",nullable = false)
-    private String roleName;
+	@Column(name = "role_name", nullable = false)
+	private String roleName;
 
 	public Long getId() {
 		return id;
@@ -34,8 +32,6 @@ public class Role {
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
-	
-	
 
 	public Role() {
 		super();
@@ -48,8 +44,4 @@ public class Role {
 		this.roleName = roleName;
 	}
 
-	
-    
-    
 }
-
